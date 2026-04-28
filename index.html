@@ -3,11 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- ↓検索エンジンに表示させない（noindex）設定を追加しました↓ -->
     <meta name="robots" content="noindex, nofollow">
     
     <title>医療処置・手続き等に関するご意向確認書</title>
-    <!-- Tailwind CSSの読み込み -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @media print {
@@ -36,29 +34,26 @@
 
     <div class="max-w-4xl mx-auto bg-white p-6 md:p-10 shadow-lg rounded-lg print-border">
         
-        <!-- ヘッダー -->
         <div class="flex justify-between items-center mb-6 border-b pb-4">
             <h1 class="text-2xl font-bold text-gray-900">医療処置・手続き等に関するご意向確認書</h1>
-            <!-- GitHubなら window.print() が直接動きます -->
-            <button onclick="window.print()" class="no-print bg-gray-800 hover:bg-gray-700 text-white px-4 py-2 rounded shadow flex items-center transition-colors">
+            <button onclick="printDocument()" class="no-print bg-gray-800 hover:bg-gray-700 text-white px-4 py-2 rounded shadow flex items-center transition-colors">
                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
                 印刷 / PDF保存
             </button>
         </div>
 
-        <!-- 基本情報（対象者・聴取者は空欄入力形式） -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8 bg-gray-50 p-4 rounded border">
             <div>
                 <label class="block text-sm font-medium text-gray-600">【対象者】</label>
                 <div class="mt-1 flex items-center">
-                    <input type="text" placeholder="お名前を入力" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 p-2 border bg-white text-lg font-bold">
+                    <input type="text" id="targetName" placeholder="お名前を入力" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 p-2 border bg-white text-lg font-bold">
                     <span class="ml-2 text-lg">様</span>
                 </div>
             </div>
             <div class="grid grid-cols-2 gap-4">
                 <div>
                     <label class="block text-sm font-medium text-gray-600">【聴取日】</label>
-                    <input type="date" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 p-2 border bg-white">
+                    <input type="date" id="targetDate" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 p-2 border bg-white">
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-600">【聴取者】</label>
@@ -68,7 +63,6 @@
         </div>
 
         <form onsubmit="event.preventDefault();">
-            <!-- セクション1 -->
             <div class="mb-10">
                 <h2 class="text-xl font-bold bg-blue-100 px-4 py-2 rounded mb-2 border-l-4 border-blue-600">1. 口からご飯を食べるのが難しくなってしまった場合のご希望について</h2>
                 <p class="text-sm text-red-600 mb-4 ml-4 font-medium">（※注：後見人等には医療処置に関する同意権限はありません。）</p>
@@ -104,7 +98,6 @@
                 </div>
             </div>
 
-            <!-- セクション2 -->
             <div class="mb-10">
                 <h2 class="text-xl font-bold bg-blue-100 px-4 py-2 rounded mb-2 border-l-4 border-blue-600">2. 息が苦しくなったり、心臓が止まりそうになった場合のご希望について</h2>
                 <p class="text-sm text-red-600 mb-4 ml-4 font-medium">（※注：後見人等には医療処置に対する同意権限はありません。）</p>
@@ -140,7 +133,6 @@
                 </div>
             </div>
 
-            <!-- セクション3 -->
             <div class="mb-10">
                 <h2 class="text-xl font-bold bg-blue-100 px-4 py-2 rounded mb-2 border-l-4 border-blue-600">3. ずっと具合が悪くなったとき（最期を過ごしたい場所）のご希望について</h2>
                 <div class="ml-4">
@@ -154,7 +146,6 @@
                 </div>
             </div>
 
-            <!-- セクション4 -->
             <div class="mb-10">
                 <h2 class="text-xl font-bold bg-blue-100 px-4 py-2 rounded mb-2 border-l-4 border-blue-600">4. 手術などが必要になった場合</h2>
                 <div class="ml-4">
@@ -165,7 +156,6 @@
                         <label class="cursor-pointer"><input type="radio" name="q4" value="わからない" class="peer sr-only" onclick="toggleQ4Who(false)"><div class="px-4 py-2 rounded-md border border-gray-300 text-gray-700 hover:bg-gray-50 transition">わからない・答えられない</div></label>
                     </div>
                     
-                    <!-- 「いる」が選択された場合のみ表示されるエリア -->
                     <div id="q4_who_container" class="hidden mt-3">
                         <label class="block text-sm text-gray-600 mb-1">どなたがいらっしゃいますか？</label>
                         <input type="text" placeholder="お名前・ご関係（例：高知の弟さん など）" class="w-full p-2 border border-blue-300 rounded text-sm focus:ring focus:ring-blue-200 outline-none bg-blue-50">
@@ -173,7 +163,6 @@
                 </div>
             </div>
 
-            <!-- セクション5 -->
             <div class="mb-10">
                 <h2 class="text-xl font-bold bg-blue-100 px-4 py-2 rounded mb-2 border-l-4 border-blue-600">5. その他、治療についてのご希望</h2>
                 <div class="ml-4">
@@ -182,7 +171,6 @@
                 </div>
             </div>
 
-            <!-- セクション6 -->
             <div class="mb-10">
                 <h2 class="text-xl font-bold bg-blue-100 px-4 py-2 rounded mb-2 border-l-4 border-blue-600">6. 万が一の時のこと（ご葬儀やお墓など）についてのご希望</h2>
                 <div class="ml-4 mb-6">
@@ -209,8 +197,40 @@
         </form>
     </div>
 
-    <!-- 動作制御用のスクリプト -->
     <script>
+        // PDF保存時のファイル名（ページのタイトル）を動的に変更して印刷画面を開く処理
+        function printDocument() {
+            // 入力された名前と日付を取得
+            const nameInput = document.getElementById('targetName').value.trim();
+            const dateInput = document.getElementById('targetDate').value;
+            
+            // 日付を YYYYMMDD 形式にする（入力がない場合は本日の日付を取得）
+            let dateStr = '';
+            if (dateInput) {
+                // "2026-04-28" から "-" を取り除いて "20260428" にする
+                dateStr = dateInput.replace(/-/g, '') + '_';
+            } else {
+                // 日付が空欄の場合は今日の日付を使う
+                const today = new Date();
+                const yyyy = today.getFullYear();
+                const mm = String(today.getMonth() + 1).padStart(2, '0');
+                const dd = String(today.getDate()).padStart(2, '0');
+                dateStr = `${yyyy}${mm}${dd}_`;
+            }
+
+            const baseTitle = '医療処置・手続き等に関するご意向確認書';
+            
+            // 日付_基本タイトル_名前 の順番で結合
+            let finalTitle = dateStr + baseTitle;
+            if (nameInput) {
+                finalTitle += '_' + nameInput;
+            }
+            
+            // ページのタイトルを書き換えてから印刷ダイアログを開く
+            document.title = finalTitle;
+            window.print();
+        }
+
         // セクション4の「いる」が選ばれた時に入力欄を表示する処理
         function toggleQ4Who(show) {
             const container = document.getElementById('q4_who_container');
